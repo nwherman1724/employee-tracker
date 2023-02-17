@@ -5,7 +5,7 @@
 
         // create the connection to database
         const connection = mysql.createConnection({
-        host: 'localhost',
+        host: '127.0.0.1',
         user: 'root',
         database: 'test'
         });
@@ -27,3 +27,17 @@
             console.log(results);
         }
         );
+
+
+// check challenge 11 for constructor examples
+
+// check challenge 11 for inquirer selection examples
+
+const initialPrompt = [
+    {
+        type: 'list',
+        name: 'options',
+        message: 'Please choose one of the following:',
+        choices: ['View All Departments', 'View All Roles', 'View All Employess', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Emplloyee Role']
+    }
+]
