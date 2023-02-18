@@ -42,9 +42,46 @@ const initialPrompt = [
         type: 'list',
         name: 'options',
         message: 'Please choose one of the following:',
-        choices: ['View All Departments', 'View All Roles', 'View All Employess', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Emplloyee Role']
+        choices: ['View All Departments', 'View All Roles', 'View All Employess', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role']
     }
 ]
+
+// function that takes in the string stored in an object
+function handleChoice({options}){
+
+    switch(options) {
+        case 'View All Departments':
+          console.log('view all departments');
+          break;
+
+        case 'View All Roles':
+          console.log('do something');
+          break;
+
+        case 'View All Employess':
+          console.log('do something');
+          break;
+
+        case 'Add A Department':
+          console.log('do something');
+          break;
+
+        case 'Add A Role':
+          console.log('do something');
+          break;
+
+        case 'Add An Employee':
+          console.log('do something');
+          break;
+
+        case 'Update An Employee Role':
+          console.log('do something');
+          break;
+
+        default:
+          console.log(`uh oh`);
+      }
+};
 
 function init() {
 
@@ -52,7 +89,7 @@ function init() {
     inquirer
       .prompt(initialPrompt)
         .then((answers) => {
-          console.log(answers)
+          handleChoice(answers)
         });
   
   }
