@@ -1,7 +1,11 @@
+const inquirer = require('inquirer');
+// get the client
+const mysql = require('mysql2');
+
 // sample code for mysql2
 
-        // get the client
-        const mysql = require('mysql2');
+        // // get the client
+        // const mysql = require('mysql2');
 
         // create the connection to database
         const connection = mysql.createConnection({
@@ -41,3 +45,16 @@ const initialPrompt = [
         choices: ['View All Departments', 'View All Roles', 'View All Employess', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Emplloyee Role']
     }
 ]
+
+function init() {
+
+    // asks questions in the terminal to receive input from the user
+    inquirer
+      .prompt(initialPrompt)
+        .then((answers) => {
+          console.log(answers)
+        });
+  
+  }
+  
+  init();
