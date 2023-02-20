@@ -29,8 +29,11 @@ INSERT INTO role (title, salary, department_id)
 
 -- Insert data into the employee table
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-    VALUES ("Tony", "Stark", )
+    VALUES ("Tony", "Stark", 6, null);
 
-Questions for tutor:
-How does inputting data work in joined fields?
-Help writing queries to do things when option is chosen from inquirer
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    VALUES ("Pepper", "Potts", 5, 1);
+
+-- Questions for tutor:
+-- How does inputting data work in joined fields? x
+-- Help writing queries to do things when option is chosen from inquirer

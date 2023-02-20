@@ -4,33 +4,13 @@ const mysql = require('mysql2');
 
 // sample code for mysql2
 
-        // // get the client
-        // const mysql = require('mysql2');
-
         // create the connection to database
         const connection = mysql.createConnection({
         host: '127.0.0.1',
         user: 'root',
-        database: 'test'
+        password: '',
+        database: 'business_db'
         });
-
-        // simple query
-        connection.query(
-        'SELECT * FROM `table` WHERE `name` = "Page" AND `age` > 45',
-        function(err, results, fields) {
-            console.log(results); // results contains rows returned by server
-            console.log(fields); // fields contains extra meta data about results, if available
-        }
-        );
-
-        // with placeholder
-        connection.query(
-        'SELECT * FROM `table` WHERE `name` = ? AND `age` > ?',
-        ['Page', 45],
-        function(err, results) {
-            console.log(results);
-        }
-        );
 
 
 // check challenge 11 for constructor examples
@@ -42,7 +22,7 @@ const initialPrompt = [
         type: 'list',
         name: 'options',
         message: 'Please choose one of the following:',
-        choices: ['View All Departments', 'View All Roles', 'View All Employess', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role']
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role']
     }
 ]
 
@@ -51,31 +31,66 @@ function handleChoice({options}){
 
     switch(options) {
         case 'View All Departments':
-          console.log('view all departments');
+          connection.query(
+            'SELECT * FROM department',
+            function(results) {
+                console.table(results); // results contains rows returned by server
+            }
+            );
           break;
 
         case 'View All Roles':
-          console.log('do something');
+          connection.query(
+            'SELECT role.id, role.title, role.salary, department.id FROM role LEFT JOIN department ON role.department_id = department.id',
+            function(results) {
+                console.table(results); // results contains rows returned by server
+            }
+            );
           break;
 
-        case 'View All Employess':
-          console.log('do something');
+        case 'View All Employees':
+          connection.query(
+            'SELECT employee.id, employee.first_name, employee.last_name, role.title, employee.manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id',
+            function(results) {
+                console.table(results); // results contains rows returned by server
+            }
+            );
           break;
 
         case 'Add A Department':
-          console.log('do something');
+          connection.query(
+            'SELECT ',
+            function(results) {
+                console.table(results); // results contains rows returned by server
+            }
+            );
           break;
 
         case 'Add A Role':
-          console.log('do something');
+          connection.query(
+            'SELECT ',
+            function(results) {
+                console.table(results); // results contains rows returned by server
+            }
+            );
           break;
 
         case 'Add An Employee':
-          console.log('do something');
+          connection.query(
+            'SELECT ',
+            function(results) {
+                console.table(results); // results contains rows returned by server
+            }
+            );
           break;
 
         case 'Update An Employee Role':
-          console.log('do something');
+          connection.query(
+            'SELECT ',
+            function(results) {
+                console.table(results); // results contains rows returned by server
+            }
+            );
           break;
 
         default:
