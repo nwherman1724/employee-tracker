@@ -31,18 +31,23 @@ function handleChoice({options}){
 
     switch(options) {
         case 'View All Departments':
-          connection.query(
-            'SELECT * FROM department',
-            function(results) {
-                console.table(results); // results contains rows returned by server
-            }
-            );
+          // connection.query(
+          //   'SELECT * FROM department',
+          //   function(results) {
+          //       console.table(results); // results contains rows returned by server
+          //   }
+          //   );
+            connection.query(
+              `SELECT department.name AS department FROM department`,
+              (err, res) => {
+                console.table(res);
+            });
           break;
 
         case 'View All Roles':
           connection.query(
             'SELECT role.id, role.title, role.salary, department.id FROM role LEFT JOIN department ON role.department_id = department.id',
-            function(results) {
+            function(err, results) {
                 console.table(results); // results contains rows returned by server
             }
             );
@@ -51,7 +56,7 @@ function handleChoice({options}){
         case 'View All Employees':
           connection.query(
             'SELECT employee.id, employee.first_name, employee.last_name, role.title, employee.manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id',
-            function(results) {
+            function(err, results) {
                 console.table(results); // results contains rows returned by server
             }
             );
