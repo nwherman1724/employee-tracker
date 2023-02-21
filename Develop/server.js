@@ -8,7 +8,7 @@ const mysql = require('mysql2');
         const connection = mysql.createConnection({
         host: '127.0.0.1',
         user: 'root',
-        password: '',
+        password: 'Danalee524',
         database: 'business_db'
         });
 
@@ -31,24 +31,26 @@ function handleChoice({options}){
 
     switch(options) {
         case 'View All Departments':
-          // connection.query(
-          //   'SELECT * FROM department',
-          //   function(results) {
-          //       console.table(results); // results contains rows returned by server
-          //   }
-          //   );
             connection.query(
-              `SELECT department.name AS department FROM department`,
-              (err, res) => {
-                console.table(res);
+              'SELECT department.name AS `Department`, department.id AS `Department ID` FROM department',
+              (err, results) => {
+                if(err) {
+                  console.log(err)
+                } else {
+                console.table(results)
+                };
             });
           break;
 
         case 'View All Roles':
           connection.query(
-            'SELECT role.id, role.title, role.salary, department.id FROM role LEFT JOIN department ON role.department_id = department.id',
+            'SELECT role.title AS `Job Title`, role.id AS `Role ID`, department.id AS `Department ID`, role.salary AS `Salary` FROM role LEFT JOIN department ON role.department_id = department.id',
             function(err, results) {
-                console.table(results); // results contains rows returned by server
+                if(err) {
+                  console.log(err)
+                } else {
+                console.table(results)
+                }; // results contains rows returned by server
             }
             );
           break;
