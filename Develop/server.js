@@ -56,10 +56,16 @@ function handleChoice({options}){
           break;
 
         case 'View All Employees':
+          // WHEN I choose to view all employees
+          // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
           connection.query(
-            'SELECT employee.id, employee.first_name, employee.last_name, role.title, employee.manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id',
+            'SELECT employee.id AS `Employee ID`, employee.first_name AS `First Name`, employee.last_name AS `Last Name`, role.title AS `Title`, employee.manager_id AS `Manager ID` FROM employee LEFT JOIN role ON employee.role_id = role.id, LEFT JOIN employee on employee.manager_id = employee.id',
             function(err, results) {
-                console.table(results); // results contains rows returned by server
+              if(err) {
+                console.log(err)
+              } else {
+              console.table(results)
+              }; // results contains rows returned by server
             }
             );
           break;
