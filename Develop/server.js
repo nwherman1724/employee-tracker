@@ -32,7 +32,9 @@ function handleChoice({options}){
     switch(options) {
         case 'View All Departments':
             connection.query(
-              'SELECT department.name AS `Department`, department.id AS `Department ID` FROM department',
+              `SELECT department.name AS 'Department',
+                  department.id AS 'Department ID'
+               FROM department`,
               (err, results) => {
                 if(err) {
                   console.log(err)
@@ -44,7 +46,12 @@ function handleChoice({options}){
 
         case 'View All Roles':
           connection.query(
-            'SELECT role.title AS `Job Title`, role.id AS `Role ID`, department.id AS `Department ID`, role.salary AS `Salary` FROM role LEFT JOIN department ON role.department_id = department.id',
+            `SELECT role.title AS 'Job Title',
+                role.id AS 'Role ID', 
+                department.id AS 'Department ID',
+                role.salary AS 'Salary'
+             FROM role 
+                LEFT JOIN department ON role.department_id = department.id`,
             function(err, results) {
                 if(err) {
                   console.log(err)
@@ -56,10 +63,20 @@ function handleChoice({options}){
           break;
 
         case 'View All Employees':
-          // WHEN I choose to view all employees
-          // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
           connection.query(
-            'SELECT employee.id AS `Employee ID`, employee.first_name AS `First Name`, employee.last_name AS `Last Name`, role.title AS `Title`, employee.manager_id AS `Manager ID` FROM employee LEFT JOIN role ON employee.role_id = role.id, LEFT JOIN employee on employee.manager_id = employee.id',
+            `SELECT 
+                employee.id AS 'Employee ID',
+                employee.first_name AS 'First Name',
+                employee.last_name AS 'Last Name',
+                role.title AS 'Title',
+                role.department_id AS 'Department',
+                role.salary AS 'Salary',
+                CONCAT(manager.first_name, ' ', manager.last_name) AS 'Manager'
+             FROM employee 
+                LEFT JOIN role ON employee.role_id = role.id
+                  LEFT JOIN department ON role.department_id = department.id
+                    LEFT JOIN employee manager on manager.id = employee.manager_id`,
+
             function(err, results) {
               if(err) {
                 console.log(err)
