@@ -31,7 +31,7 @@ const whichRole = [
       type: 'input',
       name: 'role',
       message: 'What is the name of the role you would like to add?',
-  }
+  },
 ]
 
 const whichEmp = [
@@ -39,7 +39,7 @@ const whichEmp = [
       type: 'input',
       name: 'employee',
       message: 'What is the name of the employee you would like to add?',
-  }
+  },
 ]
 
 const whichDept = [
@@ -47,7 +47,7 @@ const whichDept = [
       type: 'input',
       name: 'department',
       message: 'What is the name of the department you would like to add?',
-  }
+  },
 ]
 
 function addRole(whichRole){
@@ -74,7 +74,7 @@ function addDept(){
           connection.query(
             `INSERT INTO department (name)
             VALUES (?)`,
-            [answers.name],
+            (`${answers}`),
             function(err, results) {
               if(err) {
                 console.log(err)
