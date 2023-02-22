@@ -22,9 +22,69 @@ const initialPrompt = [
         type: 'list',
         name: 'options',
         message: 'Please choose one of the following:',
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role']
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Exit']
     }
 ]
+
+const whichRole = [
+  {
+      type: 'input',
+      name: 'role',
+      message: 'What is the name of the role you would like to add?',
+  }
+]
+
+const whichEmp = [
+  {
+      type: 'input',
+      name: 'employee',
+      message: 'What is the name of the employee you would like to add?',
+  }
+]
+
+const whichDept = [
+  {
+      type: 'input',
+      name: 'department',
+      message: 'What is the name of the department you would like to add?',
+  }
+]
+
+function addRole(whichRole){
+  inquirer
+  .prompt(whichRole)
+      .then((answers) => {
+          console.log(answers)
+      })
+};
+
+function addEmp(whichEmp){
+  inquirer
+  .prompt(whichEmp)
+      .then((answers) => {
+        console.log(answers)
+      })
+};
+
+function addDept(){
+  inquirer
+    .prompt(whichDept)
+        .then((answers) => {
+          console.log(answers)
+          connection.query(
+            `INSERT INTO department (name)
+            VALUES (?)`,
+            [answers.name],
+            function(err, results) {
+              if(err) {
+                console.log(err)
+              } else {
+              console.table(results)
+              }; // results contains rows returned by server
+            }
+            );
+        })
+};
 
 // function that takes in the string stored in an object
 function handleChoice({options}){
@@ -88,12 +148,9 @@ function handleChoice({options}){
           break;
 
         case 'Add A Department':
-          connection.query(
-            'SELECT ',
-            function(results) {
-                console.table(results); // results contains rows returned by server
-            }
-            );
+          // WHEN I choose to add a department
+          // THEN I am prompted to enter the name of the department and that department is added to the database
+          addDept();
           break;
 
         case 'Add A Role':
@@ -124,7 +181,7 @@ function handleChoice({options}){
           break;
 
         default:
-          console.log(`uh oh`);
+          console.log(`Thank you. Goodbye!`);
       }
 };
 
