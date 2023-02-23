@@ -177,10 +177,53 @@ function viewDepts(){
         console.log(err)
       } else {
       console.table(results)
-      console.log("Press the enter key to continue.")
+      //console.log("Press the enter key to continue.")
       };
   });
 };
+
+function viewRoles(){
+  connection.query(
+    `SELECT role.title AS 'Job Title',
+        role.id AS 'Role ID', 
+        department.id AS 'Department ID',
+        role.salary AS 'Salary'
+     FROM role 
+        LEFT JOIN department ON role.department_id = department.id`,
+    function(err, results) {
+        if(err) {
+          console.log(err)
+        } else {
+        console.table(results)
+        }; // results contains rows returned by server
+    }
+    );
+}
+
+function viewEmps(){
+  connection.query(
+    `SELECT 
+        employee.id AS 'Employee ID',
+        employee.first_name AS 'First Name',
+        employee.last_name AS 'Last Name',
+        role.title AS 'Title',
+        role.department_id AS 'Department',
+        role.salary AS 'Salary',
+        CONCAT(manager.first_name, ' ', manager.last_name) AS 'Manager'
+     FROM employee 
+        LEFT JOIN role ON employee.role_id = role.id
+          LEFT JOIN department ON role.department_id = department.id
+            LEFT JOIN employee manager on manager.id = employee.manager_id`,
+
+    function(err, results) {
+      if(err) {
+        console.log(err)
+      } else {
+      console.table(results)
+      }; // results contains rows returned by server
+    }
+    );
+}
 
 function reinit(){
 
@@ -192,52 +235,20 @@ function handleChoice({options}){
         case 'View All Departments':
             
             viewDepts();
-            // init();
+            init();
           break;
 
         case 'View All Roles':
-          connection.query(
-            `SELECT role.title AS 'Job Title',
-                role.id AS 'Role ID', 
-                department.id AS 'Department ID',
-                role.salary AS 'Salary'
-             FROM role 
-                LEFT JOIN department ON role.department_id = department.id`,
-            function(err, results) {
-                if(err) {
-                  console.log(err)
-                } else {
-                console.table(results)
-                }; // results contains rows returned by server
-            }
-            );
 
+          viewRoles();
+          init();
             
           break;
 
         case 'View All Employees':
-          connection.query(
-            `SELECT 
-                employee.id AS 'Employee ID',
-                employee.first_name AS 'First Name',
-                employee.last_name AS 'Last Name',
-                role.title AS 'Title',
-                role.department_id AS 'Department',
-                role.salary AS 'Salary',
-                CONCAT(manager.first_name, ' ', manager.last_name) AS 'Manager'
-             FROM employee 
-                LEFT JOIN role ON employee.role_id = role.id
-                  LEFT JOIN department ON role.department_id = department.id
-                    LEFT JOIN employee manager on manager.id = employee.manager_id`,
 
-            function(err, results) {
-              if(err) {
-                console.log(err)
-              } else {
-              console.table(results)
-              }; // results contains rows returned by server
-            }
-            );
+          viewEmps();
+
           break;
 
         case 'Add A Department':
