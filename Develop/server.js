@@ -8,7 +8,7 @@ const mysql = require('mysql2');
         const connection = mysql.createConnection({
         host: '127.0.0.1',
         user: 'root',
-        password: '',
+        password: 'password',
         database: 'business_db'
         });
 
@@ -32,6 +32,16 @@ const whichRole = [
       name: 'role',
       message: 'What is the name of the role you would like to add?',
   },
+  {
+      type: 'input',
+      name: 'salary',
+      message: 'What is the roles salary?',
+  },
+  {
+      type: 'input',
+      name: 'department',
+      message: 'What department is the role in?',
+  },
 ]
 
 const whichEmp = [
@@ -50,36 +60,81 @@ const whichDept = [
   },
 ]
 
-function addRole(whichRole){
-  inquirer
-  .prompt(whichRole)
-      .then((answers) => {
-          console.log(answers)
-      })
+function addRole(){
+  // WHEN I choose to add a role
+  // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
+
+  // inquirer
+  //   .prompt(whichRole)
+  //       .then((answers) => {
+  //         console.log(answers)
+  //         connection.query(
+  //           `INSERT INTO role (name, salary, department)
+  //           VALUES (?,?,?)`,
+  //           ([answers.role], [answers.salary], [answers.department]),
+  //           function(err, results) {
+  //             if(err) {
+  //               console.log(err)
+  //             } else {
+  //             console.table(results)
+  //             }; // results contains rows returned by server
+  //           }
+  //           );
+  //       })
+
+  inquirer.prompt(whichRole)
+  .then((answers) => {
+    // prepare the parameterized query
+    const query = `INSERT INTO role (name, salary, department) VALUES (?, ?, ?)`;
+    const values = [answers.role, answers.salary, answers.department];
+
+    // execute the parameterized query with the values
+    connection.query(query, values, (err, results, fields) => {
+      if (err) {
+        console.error(err);
+        // handle error
+      } else {
+        console.table(results);
+        // handle success
+      }
+    });
+  });
+
 };
 
-function addEmp(whichEmp){
+function addEmp(){
   inquirer
-  .prompt(whichEmp)
-      .then((answers) => {
-        console.log(answers)
-      })
+    .prompt(whichEmp)
+        .then((answers) => {
+          console.log(answers)
+          connection.query(
+            `INSERT INTO department (name)
+            VALUES (?)`,
+            (`${answers.department}`),
+            function(err, results) {
+              if(err) {
+                console.log(err)
+              } else {
+              console.table(results)
+              }; // results contains rows returned by server
+            }
+            );
+        })
 };
 
 function addDept(){
   inquirer
     .prompt(whichDept)
         .then((answers) => {
-          console.log(answers)
           connection.query(
             `INSERT INTO department (name)
             VALUES (?)`,
-            (`${answers}`),
+            [answers.department],
             function(err, results) {
               if(err) {
                 console.log(err)
               } else {
-              console.table(results)
+              console.log("A department has been added to the table.")
               }; // results contains rows returned by server
             }
             );
