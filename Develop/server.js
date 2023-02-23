@@ -8,7 +8,7 @@ const mysql = require('mysql2');
         const connection = mysql.createConnection({
         host: '127.0.0.1',
         user: 'root',
-        password: 'password',
+        password: '',
         database: 'business_db'
         });
 
@@ -30,7 +30,7 @@ const whichRole = [
   {
       type: 'input',
       name: 'role',
-      message: 'What is the name of the role you would like to add?',
+      message: 'What is the role title?',
   },
   {
       type: 'input',
@@ -40,7 +40,7 @@ const whichRole = [
   {
       type: 'input',
       name: 'department',
-      message: 'What department is the role in?',
+      message: "What is the role's department ID?",
   },
 ]
 
@@ -64,28 +64,10 @@ function addRole(){
   // WHEN I choose to add a role
   // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 
-  // inquirer
-  //   .prompt(whichRole)
-  //       .then((answers) => {
-  //         console.log(answers)
-  //         connection.query(
-  //           `INSERT INTO role (name, salary, department)
-  //           VALUES (?,?,?)`,
-  //           ([answers.role], [answers.salary], [answers.department]),
-  //           function(err, results) {
-  //             if(err) {
-  //               console.log(err)
-  //             } else {
-  //             console.table(results)
-  //             }; // results contains rows returned by server
-  //           }
-  //           );
-  //       })
-
   inquirer.prompt(whichRole)
   .then((answers) => {
     // prepare the parameterized query
-    const query = `INSERT INTO role (name, salary, department) VALUES (?, ?, ?)`;
+    const query = 'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
     const values = [answers.role, answers.salary, answers.department];
 
     // execute the parameterized query with the values
@@ -209,30 +191,35 @@ function handleChoice({options}){
           break;
 
         case 'Add A Role':
-          connection.query(
-            'SELECT ',
-            function(results) {
-                console.table(results); // results contains rows returned by server
-            }
-            );
+          // connection.query(
+          //   'SELECT ',
+          //   function(results) {
+          //       console.table(results); // results contains rows returned by server
+          //   }
+          //   );
+
+          addRole();
           break;
 
         case 'Add An Employee':
-          connection.query(
-            'SELECT ',
-            function(results) {
-                console.table(results); // results contains rows returned by server
-            }
-            );
+          // connection.query(
+          //   'SELECT ',
+          //   function(results) {
+          //       console.table(results); // results contains rows returned by server
+          //   }
+          //   );
+
+          addEmp();
           break;
 
         case 'Update An Employee Role':
-          connection.query(
-            'SELECT ',
-            function(results) {
-                console.table(results); // results contains rows returned by server
-            }
-            );
+          // connection.query(
+          //   'SELECT ',
+          //   function(results) {
+          //       console.table(results); // results contains rows returned by server
+          //   }
+          //   );
+          console.log("still coding")
           break;
 
         default:
