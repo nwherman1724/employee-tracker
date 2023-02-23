@@ -47,9 +47,24 @@ const whichRole = [
 const whichEmp = [
   {
       type: 'input',
-      name: 'employee',
-      message: 'What is the name of the employee you would like to add?',
+      name: 'firstName',
+      message: "What is the employee's first name?",
   },
+  {
+    type: 'input',
+    name: 'lastName',
+    message: "What is the employee's last name?",
+},
+{
+  type: 'input',
+  name: 'role',
+  message: "What is the employee's role ID?",
+},
+{
+  type: 'input',
+  name: 'manager',
+  message: "What is the manager ID of the employee's manager?",
+},
 ]
 
 const whichDept = [
@@ -60,9 +75,20 @@ const whichDept = [
   },
 ]
 
+const updateEmployee = [
+  {
+    type: 'input',
+    name: 'empId',
+    message: "What is the employee's ID number?",
+  },
+  {
+    type: 'input',
+    name: 'newRole',
+    message: "What is the employee's new role ID?",
+  },
+];
+
 function addRole(){
-  // WHEN I choose to add a role
-  // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 
   inquirer.prompt(whichRole)
   .then((answers) => {
@@ -85,15 +111,14 @@ function addRole(){
 };
 
 function addEmp(){
+
   inquirer
     .prompt(whichEmp)
         .then((answers) => {
-          console.log(answers)
-          connection.query(
-            `INSERT INTO department (name)
-            VALUES (?)`,
-            (`${answers.department}`),
-            function(err, results) {
+          const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
+          const values = [answers.firstName, answers.lastName, answers.role, answers.manager]
+
+          connection.query(query, values, function(err, results) {
               if(err) {
                 console.log(err)
               } else {
@@ -123,22 +148,51 @@ function addDept(){
         })
 };
 
+function updateRole(){
+  
+        inquirer
+          .prompt(updateEmployee)
+            .then((answers) => {
+                const query = `UPDATE employee SET role_id = ? WHERE id = ?`;
+                const values = [answers.newRole, answers.empId];
+
+                connection.query(query, values, function(err, results) {
+                  if(err) {
+                    console.log(err)
+                  } else {
+                  console.table(results)
+                  }; // results contains rows returned by server
+                }
+                );
+            })
+}
+
+function viewDepts(){
+  connection.query(
+    `SELECT department.name AS 'Department',
+        department.id AS 'Department ID'
+     FROM department`,
+    (err, results) => {
+      if(err) {
+        console.log(err)
+      } else {
+      console.table(results)
+      console.log("Press the enter key to continue.")
+      };
+  });
+};
+
+function reinit(){
+
+}
 // function that takes in the string stored in an object
 function handleChoice({options}){
 
     switch(options) {
         case 'View All Departments':
-            connection.query(
-              `SELECT department.name AS 'Department',
-                  department.id AS 'Department ID'
-               FROM department`,
-              (err, results) => {
-                if(err) {
-                  console.log(err)
-                } else {
-                console.table(results)
-                };
-            });
+            
+            viewDepts();
+            // init();
           break;
 
         case 'View All Roles':
@@ -157,6 +211,8 @@ function handleChoice({options}){
                 }; // results contains rows returned by server
             }
             );
+
+            
           break;
 
         case 'View All Employees':
@@ -185,41 +241,23 @@ function handleChoice({options}){
           break;
 
         case 'Add A Department':
-          // WHEN I choose to add a department
-          // THEN I am prompted to enter the name of the department and that department is added to the database
+  
           addDept();
           break;
 
         case 'Add A Role':
-          // connection.query(
-          //   'SELECT ',
-          //   function(results) {
-          //       console.table(results); // results contains rows returned by server
-          //   }
-          //   );
 
           addRole();
           break;
 
         case 'Add An Employee':
-          // connection.query(
-          //   'SELECT ',
-          //   function(results) {
-          //       console.table(results); // results contains rows returned by server
-          //   }
-          //   );
 
           addEmp();
           break;
 
         case 'Update An Employee Role':
-          // connection.query(
-          //   'SELECT ',
-          //   function(results) {
-          //       console.table(results); // results contains rows returned by server
-          //   }
-          //   );
-          console.log("still coding")
+          
+          updateRole();
           break;
 
         default:
