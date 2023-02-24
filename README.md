@@ -4,7 +4,7 @@
 
   ## :blue_book: Description
 
-  This is an application that used SQL to track employees.
+  This is an application that uses MySQL to track employees. An inquirer prompt opens on startup that give you options. Based on the option the user selects, a MySQL query will run.
 
   ## :bookmark_tabs: Table of Contents
 
@@ -13,7 +13,6 @@
   - [Usage](#usage)
   - [License](#license)
   - [Contribution](#contribution)
-  - [Tests](#tests)
   - [Questions](#questions)
 
   ## :hammer_and_wrench: Installation
@@ -24,13 +23,9 @@
       
   ## :lock: License
   
-  This project is cover under the MIT License.
+  This project is covered under the MIT License.
 
   ## :handshake: Contribution
-  
-
-  ## :chart_with_upwards_trend: Tests
-  no tests
   
   ## :question: Questions
   Github Username: nwherman1724
