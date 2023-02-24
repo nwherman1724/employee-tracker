@@ -1,8 +1,5 @@
 const inquirer = require('inquirer');
-// get the client
 const mysql = require('mysql2');
-
-// sample code for mysql2
 
         // create the connection to database
         const connection = mysql.createConnection({
@@ -12,11 +9,7 @@ const mysql = require('mysql2');
         database: 'business_db'
         });
 
-
-// check challenge 11 for constructor examples
-
-// check challenge 11 for inquirer selection examples
-
+// Initial propmts to display upon app start up
 const initialPrompt = [
     {
         type: 'list',
@@ -26,6 +19,7 @@ const initialPrompt = [
     }
 ]
 
+// propts that display when add a role is selected
 const whichRole = [
   {
       type: 'input',
@@ -44,6 +38,7 @@ const whichRole = [
   },
 ]
 
+// propts that display when add an employee is selected
 const whichEmp = [
   {
       type: 'input',
@@ -67,6 +62,7 @@ const whichEmp = [
 },
 ]
 
+//propts that display when add a department is selected
 const whichDept = [
   {
       type: 'input',
@@ -75,6 +71,7 @@ const whichDept = [
   },
 ]
 
+//propts that display when update an employee is selected is selected
 const updateEmployee = [
   {
     type: 'input',
@@ -88,6 +85,7 @@ const updateEmployee = [
   },
 ];
 
+// adds a role to the role table 
 function addRole(){
 
   inquirer.prompt(whichRole)
@@ -102,7 +100,7 @@ function addRole(){
         console.error(err);
         // handle error
       } else {
-        console.table(results);
+        console.log("A role was added to the table.");
         // handle success
       }
     });
@@ -110,6 +108,7 @@ function addRole(){
 
 };
 
+// adds a employee to the employee table
 function addEmp(){
 
   inquirer
@@ -122,13 +121,14 @@ function addEmp(){
               if(err) {
                 console.log(err)
               } else {
-              console.table(results)
+                console.log("An employee was added to the table.");
               }; // results contains rows returned by server
             }
             );
         })
 };
 
+// adds a department to the department table
 function addDept(){
   inquirer
     .prompt(whichDept)
@@ -148,6 +148,7 @@ function addDept(){
         })
 };
 
+// updates an employees role in the employee table
 function updateRole(){
   
         inquirer
@@ -160,13 +161,14 @@ function updateRole(){
                   if(err) {
                     console.log(err)
                   } else {
-                  console.table(results)
+                    console.log("An employees role was updated.")
                   }; // results contains rows returned by server
                 }
                 );
             })
 }
 
+// displays the department table
 function viewDepts(){
   connection.query(
     `SELECT department.name AS 'Department',
@@ -177,11 +179,12 @@ function viewDepts(){
         console.log(err)
       } else {
       console.table(results)
-      //console.log("Press the enter key to continue.")
+      
       };
   });
 };
 
+//displays the role table
 function viewRoles(){
   connection.query(
     `SELECT role.title AS 'Job Title',
@@ -200,6 +203,8 @@ function viewRoles(){
     );
 }
 
+
+// displays the employee table
 function viewEmps(){
   connection.query(
     `SELECT 
@@ -225,50 +230,50 @@ function viewEmps(){
     );
 }
 
-function reinit(){
-
-}
-// function that takes in the string stored in an object
+// function that takes in the string stored in an object and runs a function based on which option is selected
 function handleChoice({options}){
 
     switch(options) {
         case 'View All Departments':
             
             viewDepts();
-            init();
+
           break;
 
         case 'View All Roles':
 
           viewRoles();
-          init();
             
           break;
 
         case 'View All Employees':
 
           viewEmps();
-
+          
           break;
 
         case 'Add A Department':
   
           addDept();
+         
           break;
 
         case 'Add A Role':
 
           addRole();
+          
           break;
 
         case 'Add An Employee':
 
           addEmp();
+          
           break;
 
         case 'Update An Employee Role':
           
           updateRole();
+          
           break;
 
         default:
@@ -276,6 +281,7 @@ function handleChoice({options}){
       }
 };
 
+// function that initializes the initial prompts
 function init() {
 
     // asks questions in the terminal to receive input from the user
@@ -287,4 +293,5 @@ function init() {
   
   }
   
+  // funtion call
   init();
