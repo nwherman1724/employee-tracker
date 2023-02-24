@@ -33,8 +33,11 @@
 5.) npm i console.table
 
   ## :zap: Usage
-  video added later
-      
+  
+  ### Demo
+
+https://user-images.githubusercontent.com/93491747/221180402-a687b6ce-2df3-4db1-89f6-3e4371f717ac.mov
+
   ## :lock: License
   
   This project is covered under the MIT License.
