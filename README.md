@@ -41,6 +41,8 @@
 
   ## :handshake: Contribution
   
+  See contributor covenant: https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md
+  
   ## :question: Questions
   Github Username: nwherman1724
 
