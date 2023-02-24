@@ -16,7 +16,21 @@
   - [Questions](#questions)
 
   ## :hammer_and_wrench: Installation
-  inquirer package, mySQL2 package, console.table package
+  ### Option 1:
+1.) Clone from GitHub
+
+2.) Open project directory, then npm install to install all required dependencies
+
+### Option 2: (run in console)
+1.) install npm init -y to create a new .json file
+
+2.) npm i
+
+3.) npm i inquirer@8.2.4
+
+4.) npm i mysql
+
+5.) npm i console.table
 
   ## :zap: Usage
   video added later
