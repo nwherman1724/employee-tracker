@@ -33,7 +33,3 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id)
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
     VALUES ("Pepper", "Potts", 5, 1);
-
--- Questions for tutor:
--- How does inputting data work in joined fields? x
--- Help writing queries to do things when option is chosen from inquirer
